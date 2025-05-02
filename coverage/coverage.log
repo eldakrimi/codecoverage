@@ -1,0 +1,13 @@
++ echo 'Starting file operations...'
++ create_file test.txt 'This is a test file created by the script.'
++ local filename=test.txt
++ local 'content=This is a test file created by the script.'
++ echo 'This is a test file created by the script.'
++ echo 'Created file: test.txt'
++ sleep 2
++ delete_file test.txt
++ local filename=test.txt
++ '[' -f test.txt ']'
++ rm test.txt
++ echo 'Deleted file: test.txt'
++ echo 'File operations completed.'

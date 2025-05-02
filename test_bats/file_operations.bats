@@ -1,13 +1,18 @@
 #!/usr/bin/env bats
 
-# Load the script to test
-load ../scripts/file_operations.sh
+# Define where the script lives and its name
+CWD="scripts"
+CMD="file_operations.sh"
 
 # Setup - runs before each test
 setup() {
     # Create a temporary directory for test files
     TEST_DIR="$(mktemp -d)"
     cd "$TEST_DIR"
+    
+    # Get absolute path to project root and source script
+    PROJECT_ROOT="$(cd "$(dirname "$BATS_TEST_FILENAME")/.." && pwd)"
+    source "$PROJECT_ROOT/$CWD/$CMD"
 }
 
 # Teardown - runs after each test
@@ -24,19 +29,19 @@ teardown() {
     # Assert command succeeded
     [ "$status" -eq 0 ]
     
+    # Assert output message is correct
+    [ "$output" = "Created file: test1.txt" ]
+
     # Assert file exists
     [ -f "test1.txt" ]
     
     # Assert file content is correct
     [ "$(cat test1.txt)" = "Hello World" ]
-    
-    # Assert output message is correct
-    [ "${lines[0]}" = "Created file: test1.txt" ]
 }
 
 @test "Deleting an existing file works correctly" {
-    # Create a test file first
-    echo "test content" > "test2.txt"
+    # Create a test file
+    create_file "test2.txt" "Test content"
     
     # Test file deletion
     run delete_file "test2.txt"
@@ -55,21 +60,11 @@ teardown() {
     # Test deleting non-existent file
     run delete_file "nonexistent.txt"
     
-    # Assert command succeeded (should not error)
+    # Assert command succeeded
     [ "$status" -eq 0 ]
     
-    # Assert appropriate message
+    # Assert output message is correct
     [ "${lines[0]}" = "File does not exist: nonexistent.txt" ]
 }
 
-@test "Creating and then deleting a file works correctly" {
-    # Create file
-    run create_file "test3.txt" "Test content"
-    [ "$status" -eq 0 ]
-    [ -f "test3.txt" ]
-    
-    # Delete file
-    run delete_file "test3.txt"
-    [ "$status" -eq 0 ]
-    [ ! -f "test3.txt" ]
-} 
+

@@ -1,0 +1,7 @@
+{
+  "scripts/file_operations.sh": {
+    "total": 23,
+    "covered": 6,
+    "coverage": 26.08695652173913
+  }
+}

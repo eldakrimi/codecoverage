@@ -1,0 +1,39 @@
+@test "Deleting an existing file works correctly" {
+    # Create a test file first
+    echo "test content" > "test2.txt"
+    
+    # Test file deletion
+    run delete_file "test2.txt"
+    
+    # Assert command succeeded
+    [ "$status" -eq 0 ]
+    
+    # Assert file no longer exists
+    [ ! -f "test2.txt" ]
+    
+    # Assert output message is correct
+    [ "${lines[0]}" = "Deleted file: test2.txt" ]
+}
+
+@test "Deleting a non-existent file shows appropriate message" {
+    # Test deleting non-existent file
+    run delete_file "nonexistent.txt"
+    
+    # Assert command succeeded (should not error)
+    [ "$status" -eq 0 ]
+    
+    # Assert appropriate message
+    [ "${lines[0]}" = "File does not exist: nonexistent.txt" ]
+}
+
+@test "Creating and then deleting a file works correctly" {
+    # Create file
+    run create_file "test3.txt" "Test content"
+    [ "$status" -eq 0 ]
+    [ -f "test3.txt" ]
+    
+    # Delete file
+    run delete_file "test3.txt"
+    [ "$status" -eq 0 ]
+    [ ! -f "test3.txt" ]
+} 
