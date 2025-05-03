@@ -1,0 +1,14 @@
+SCRIPT_PATH=/Users/ellendahlgren/Repos/bash-project/resources/scripts/file_operations.sh
++ /Users/ellendahlgren/Repos/bash-project/resources/scripts/file_operations.sh:25: echo 'Starting file operations...'
++ /Users/ellendahlgren/Repos/bash-project/resources/scripts/file_operations.sh:28: create_file test.txt 'This is a test file created by the script.'
++ /Users/ellendahlgren/Repos/bash-project/resources/scripts/file_operations.sh:5: local filename=test.txt
++ /Users/ellendahlgren/Repos/bash-project/resources/scripts/file_operations.sh:6: local 'content=This is a test file created by the script.'
++ /Users/ellendahlgren/Repos/bash-project/resources/scripts/file_operations.sh:8: echo 'This is a test file created by the script.'
++ /Users/ellendahlgren/Repos/bash-project/resources/scripts/file_operations.sh:9: echo 'Created file: test.txt'
++ /Users/ellendahlgren/Repos/bash-project/resources/scripts/file_operations.sh:31: sleep 2
++ /Users/ellendahlgren/Repos/bash-project/resources/scripts/file_operations.sh:34: delete_file test.txt
++ /Users/ellendahlgren/Repos/bash-project/resources/scripts/file_operations.sh:14: local filename=test.txt
++ /Users/ellendahlgren/Repos/bash-project/resources/scripts/file_operations.sh:16: '[' -f test.txt ']'
++ /Users/ellendahlgren/Repos/bash-project/resources/scripts/file_operations.sh:17: rm test.txt
++ /Users/ellendahlgren/Repos/bash-project/resources/scripts/file_operations.sh:18: echo 'Deleted file: test.txt'
++ /Users/ellendahlgren/Repos/bash-project/resources/scripts/file_operations.sh:36: echo 'File operations completed.'

@@ -1,7 +1,7 @@
 #!/usr/bin/env bats
 
 # Define where the script lives and its name
-CWD="scripts"
+CWD="resources/scripts"
 CMD="file_operations.sh"
 
 # Setup - runs before each test
@@ -11,7 +11,7 @@ setup() {
     cd "$TEST_DIR"
     
     # Get absolute path to project root and source script
-    PROJECT_ROOT="$(cd "$(dirname "$BATS_TEST_FILENAME")/.." && pwd)"
+    PROJECT_ROOT="$(cd "$(dirname "$BATS_TEST_FILENAME")/../.." && pwd)"
     source "$PROJECT_ROOT/$CWD/$CMD"
 }
 

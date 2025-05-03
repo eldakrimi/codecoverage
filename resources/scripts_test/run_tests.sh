@@ -4,7 +4,7 @@ echo "Running BATS tests..."
 echo "====================="
 
 # Run each test file individually
-for test_file in test_bats/*.bats; do
+for test_file in *.bats; do
     echo "Running $test_file..."
     bats -t "$test_file"
     if [ $? -ne 0 ]; then

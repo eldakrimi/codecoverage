@@ -1,5 +1,8 @@
 #!/usr/bin/env bats
 
+# Load coverage functions
+load coverage.sh
+
 setup() {
     # Create necessary directories
     mkdir -p coverage-reports
@@ -11,8 +14,11 @@ setup() {
 }
 
 @test "coverage tool generates coverage log" {
-    # Run the coverage tool on a test script
-    run bash coverage-tool/scripts/coverage.sh scripts/file_operations.sh
+    # Get script path
+    SCRIPT_PATH="$(cd "$(dirname "$BATS_TEST_FILENAME")/../.." && pwd)/resources/scripts/file_operations.sh"
+    
+    # Run the coverage tool
+    run collect_coverage "$SCRIPT_PATH" "coverage.log"
     
     # Debug output
     echo "Status: $status"
@@ -23,12 +29,15 @@ setup() {
 }
 
 @test "coverage tool generates report" {
+    # Get script path
+    SCRIPT_PATH="$(cd "$(dirname "$BATS_TEST_FILENAME")/../.." && pwd)/resources/scripts/file_operations.sh"
+    
     # First generate the coverage log
-    run bash coverage-tool/scripts/coverage.sh scripts/file_operations.sh
+    run collect_coverage "$SCRIPT_PATH" "coverage.log"
     echo "Coverage log generation status: $status"
     
     # Generate the coverage report
-    run npm run coverage:report
+    run generate_report "coverage.log" "coverage-reports/coverage.json"
     echo "Report generation status: $status"
     echo "Report generation output: $output"
     
@@ -42,16 +51,19 @@ setup() {
 }
 
 @test "coverage report contains expected data" {
+    # Get script path
+    SCRIPT_PATH="$(cd "$(dirname "$BATS_TEST_FILENAME")/../.." && pwd)/resources/scripts/file_operations.sh"
+    
     # First generate the coverage log
-    run bash coverage-tool/scripts/coverage.sh scripts/file_operations.sh
+    run collect_coverage "$SCRIPT_PATH" "coverage.log"
     echo "Coverage log generation status: $status"
     
     # Generate the coverage report
-    run npm run coverage:report
+    run generate_report "coverage.log" "coverage-reports/coverage.json"
     echo "Report generation status: $status"
     
     # Check if the report contains data for file_operations.sh
     run jq -r 'keys[]' coverage-reports/coverage.json
     echo "Report keys: $output"
-    [ "$output" = "scripts/file_operations.sh" ]
+    [ "$output" = "$SCRIPT_PATH" ]
 } 
